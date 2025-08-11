@@ -28,8 +28,8 @@ It was developed for **CST8277 - Enterprise Application Development, Assignment 
 
 ### 1. Clone Repository
 ```bash
-git clone 
-cd ~/assignment3/twitter-backend
+git clone https://github.com/huytranca1127/twitter-backend-oauth.git 
+cd twitter-backend-oauth
 
 ```
 
@@ -94,9 +94,24 @@ mvn spring-boot:run
 - **Header:** `Authorization: Bearer <your-token>`
 - **Description:** Returns a role-based greeting.
 
-### 6. Example Token Flow
-1. Login via GitHub OAuth2 → get token from `/token`.
-2. Call `/protected/hello` with token.
+## Testing Instructions for Professor (Token Expiry Consideration)
+
+**Important:** Tokens expire **15 minutes** after they are issued.  
+If you try to use an expired token, the API will return `401 Unauthorized`.
+
+### Steps to Test:
+1. Start the application with `mvn spring-boot:run`.
+2. Open browser → go to [http://localhost:8080/token](http://localhost:8080/token).
+3. Login with your GitHub account.
+4. Copy the generated token shown in the browser (example: `ff4bcfa8-7738-4e18-95c7-06da1033fe1c`).
+5. Open Postman → create a **GET** request to:  
+   `http://localhost:8080/protected/hello`
+6. Add header:
+   ```
+   Authorization: Bearer <your-token>
+   ```
+7. Send the request and verify you get a **role-based greeting**.
+8. If the token expires, repeat from **Step 2** to get a new token.
 
 ## Author
 Thai Huy Tran  
@@ -104,3 +119,4 @@ CST8277 Assignment 4
 
 ## License
 This project is for educational purposes only.
+
